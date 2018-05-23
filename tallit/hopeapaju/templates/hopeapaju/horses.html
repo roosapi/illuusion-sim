@@ -1,0 +1,26 @@
+{% load static %}
+
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static "hopeapaju/temp-style.css" %}" >
+    </head>
+    <body>
+        <div class="horse">
+            <h1>Hopeapajun hevoset</h1>
+        {% for horse in horses %}
+
+        <a href="{{ horse.address }}">{{ horse.name }}</a> ({{ horse.breed }} {{ horse.sex }})<br>
+        {% endfor %}
+
+        <h1>Muistoissa</h1>
+        {% for horse in deceased  %}
+
+        <a href="{{ horse.address }}">{{ horse.name }}</a> ({{ horse.breed }} {{ horse.sex }})<br>
+        {% endfor %}
+
+
+    </div>
+    </body>
+
+</html>

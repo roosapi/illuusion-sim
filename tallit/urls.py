@@ -1,8 +1,8 @@
-from django.urls import path
+from django.urls import include,path
 
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('hevonen/<slug>', views.index, name='hevonen'),
+    path('hopeapaju/', include('tallit.hopeapaju.urls')),
+    path('', views.index, name='index')
 ]

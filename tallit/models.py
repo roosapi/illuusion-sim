@@ -1,125 +1,139 @@
 from django.db import models
 
-class Omistaja(models.Model):
+class Breed(models.Model):
+    breed = models.CharField(primary_key=True, max_length=25)
+    abbr = models.CharField(max_length=5)
+
+    class Meta:
+        managed = False
+        db_table = 'breed'
+        unique_together = (('breed', 'abbr'),)
+
+
+class Breeder(models.Model):
+    name = models.CharField(unique=True, max_length=45, blank=True, null=True)
+    url = models.CharField(max_length=120, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'breeder'
+
+
+class Owner(models.Model):
     vrl = models.CharField(primary_key=True, max_length=15)
-    nimi = models.CharField(max_length=65)
+    name = models.CharField(max_length=65)
     url = models.CharField(max_length=65)
 
     class Meta:
         managed = False
-        db_table = 'omistaja'
+        db_table = 'owner'
 
 
-class Rotu(models.Model):
-    rotu = models.CharField(primary_key=True, max_length=25)
-    rotu_lyh = models.CharField(max_length=5)
-
-    class Meta:
-        managed = False
-        db_table = 'rotu'
-        unique_together = (('rotu', 'rotu_lyh'),)
-
-class Hevonen(models.Model):
-    nimi = models.CharField(max_length=65)
-    osoite = models.CharField(max_length=225, blank=True, null=True)
-    lempinimi = models.CharField(max_length=65, blank=True, null=True)
-    vh_tunnus = models.CharField(max_length=65, blank=True, null=True)
-    rotu = models.CharField(max_length=65)
-    skp = models.CharField(max_length=5)
-    syntaika = models.DateField(blank=True, null=True)
-    vari = models.CharField(max_length=65, blank=True, null=True)
-    saka = models.IntegerField(blank=True, null=True)
-    omistaja = models.ForeignKey('Omistaja', models.DO_NOTHING, db_column='omistaja', blank=True, null=True)
-    kasvattaja = models.CharField(max_length=65, blank=True, null=True)
-    kasvattaja_url = models.CharField(max_length=225, blank=True, null=True)
-    painotus = models.CharField(max_length=25, blank=True, null=True)
-    koulutustaso = models.CharField(max_length=40, blank=True, null=True)
-    nayttelyt = models.IntegerField(blank=True, null=True)
-    luonne = models.TextField(blank=True, null=True)
-    isa = models.ForeignKey('self', models.DO_NOTHING, db_column='isa', blank=True, null=True)
-    ema = models.ForeignKey('self', models.DO_NOTHING, db_column='ema', blank=True, null=True)
-    suku = models.IntegerField()
+class Horse(models.Model):
+    name = models.CharField(max_length=45)
+    status = models.PositiveIntegerField()
+    breed = models.CharField(max_length=45)
+    sex = models.CharField(max_length=5, blank=True, null=True)
+    address = models.CharField(max_length=225, blank=True, null=True)
+    height = models.PositiveIntegerField(blank=True, null=True)
+    colour = models.CharField(max_length=45, blank=True, null=True)
+    dob = models.DateTimeField(blank=True, null=True)
+    sire = models.ForeignKey('self', models.DO_NOTHING, db_column='sire', blank=True, null=True, related_name="horse_sire")
+    dam = models.ForeignKey('self', models.DO_NOTHING, db_column='dam', blank=True, null=True,related_name="horse_dam")
+    pedigree = models.CharField(max_length=45, blank=True, null=True)
     evm = models.IntegerField()
-    status = models.CharField(max_length=25, blank=True, null=True)
-    talli = models.CharField(max_length=20, blank=True, null=True)
+    vh = models.CharField(max_length=45, blank=True, null=True)
+    owner = models.CharField(max_length=15, blank=True, null=True)
+    stable = models.CharField(max_length=45, blank=True, null=True)
+    breeder = models.ForeignKey(Breeder, models.DO_NOTHING, db_column='breeder', blank=True, null=True)
+    discipline = models.CharField(max_length=45, blank=True, null=True)
+    level = models.CharField(max_length=45, blank=True, null=True)
+    shows = models.IntegerField()
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'hevonen'
-        unique_together = (('nimi', 'rotu', 'skp', 'syntaika'),)
+        db_table = 'horse'
+
+    def __str__(self):
+        return self.name
 
 
-class HevonenKuva(models.Model):
-    hevonen = models.ForeignKey(Hevonen, models.DO_NOTHING, db_column='hevonen')
-    thumb = models.CharField(max_length=150)
-    kuva_url = models.CharField(max_length=225)
-    kuvaaja = models.CharField(max_length=65)
-    kuvaaja_url = models.CharField(max_length=150, blank=True, null=True)
-    lisatiedot = models.CharField(max_length=25, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'hevonen_kuva'
-
-
-class HevonenTekstit(models.Model):
-    hevonen = models.ForeignKey(Hevonen, models.DO_NOTHING, primary_key=True)
-    pvm = models.DateField()
-    otsikko = models.CharField(max_length=250)
-    teksti = models.TextField()
-    kirjoittaja = models.CharField(max_length=15)
+class Competition(models.Model):
+    horse = models.ForeignKey('Horse', models.DO_NOTHING)
+    discipline = models.CharField(max_length=15)
+    date = models.DateField()
+    location = models.CharField(max_length=50)
+    url = models.CharField(max_length=65)
+    class_field = models.CharField(db_column='class', max_length=50)  # Field renamed because it was a Python reserved word.
+    result = models.IntegerField()
+    participants = models.IntegerField()
+    winnings = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'hevonen_tekstit'
-        unique_together = (('hevonen', 'pvm', 'otsikko'),)
+        db_table = 'competition'
+        unique_together = (('horse', 'discipline', 'date', 'location', 'url', 'class_field', 'result', 'participants'),)
 
 
-class Meriitit(models.Model):
-    hevonen = models.ForeignKey(Hevonen, models.DO_NOTHING)
-    saavutus = models.CharField(max_length=10)
-    tilaisuus = models.CharField(max_length=150, blank=True, null=True)
-    pvm = models.DateField()
+class Copyright(models.Model):
+    name = models.CharField(unique=True, max_length=45)
+    url = models.CharField(max_length=145, blank=True, null=True)
+    license = models.CharField(max_length=45, blank=True, null=True)
+    license_url = models.CharField(max_length=145, blank=True, null=True)
+    info = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'copyright'
+
+class HorseImg(models.Model):
+    horse = models.ForeignKey(Horse, models.DO_NOTHING, db_column='horse')
+    name = models.CharField(max_length=140)
+    copy = models.ForeignKey(Copyright, models.DO_NOTHING, db_column='copy', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'horse_img'
+
+
+class HorseText(models.Model):
+    horse = models.ForeignKey(Horse, models.DO_NOTHING)
+    date = models.DateField()
+    title = models.CharField(max_length=250)
+    text = models.TextField()
+    copy = models.CharField(max_length=15)
+
+    class Meta:
+        managed = False
+        db_table = 'horse_text'
+        unique_together = (('horse', 'date', 'title'),)
+
+
+class Merit(models.Model):
+    horse = models.ForeignKey(Horse, models.DO_NOTHING)
+    merit = models.CharField(max_length=10)
+    event = models.CharField(max_length=150, blank=True, null=True)
+    date = models.DateField()
     url = models.CharField(max_length=65)
     info = models.CharField(max_length=225, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'meriitit'
+        db_table = 'merit'
 
-
-class MuuKisa(models.Model):
-    hevonen = models.ForeignKey(Hevonen, models.DO_NOTHING, primary_key=True)
-    laji = models.CharField(max_length=15)
-    pvm = models.DateField()
-    paikka = models.CharField(max_length=50)
-    kutsu_url = models.CharField(max_length=65)
-    luokka = models.CharField(max_length=50)
-    sija = models.IntegerField()
-    osallistujia = models.IntegerField()
-    voittosumma = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'muu_kisa'
-        unique_together = (('hevonen', 'laji', 'pvm', 'paikka', 'kutsu_url', 'luokka', 'sija', 'osallistujia'),)
-
-
-class Nayttelyt(models.Model):
-    jaos = models.CharField(max_length=3)
-    hevonen = models.ForeignKey(Hevonen, models.DO_NOTHING, primary_key=True)
-    pvm = models.DateField()
-    paikka = models.CharField(max_length=65)
-    kutsu_url = models.CharField(max_length=65)
-    luokka = models.CharField(max_length=65)
-    sija = models.CharField(max_length=10)
-    tulos = models.CharField(max_length=10, blank=True, null=True)
-    tuomari = models.CharField(max_length=20)
+class Show(models.Model):
+    type = models.CharField(max_length=3)
+    horse = models.ForeignKey(Horse, models.DO_NOTHING)
+    date = models.DateField()
+    location = models.CharField(max_length=65)
+    url = models.CharField(max_length=65)
+    class_field = models.CharField(db_column='class', max_length=65)  # Field renamed because it was a Python reserved word.
+    result = models.CharField(max_length=10)
+    evaluation = models.CharField(max_length=10, blank=True, null=True)
+    judge = models.CharField(max_length=20)
 
     class Meta:
         managed = False
-        db_table = 'nayttelyt'
-        unique_together = (('hevonen', 'kutsu_url', 'luokka'),)
-
-
-
+        db_table = 'show'
+        unique_together = (('horse', 'url', 'class_field'),)

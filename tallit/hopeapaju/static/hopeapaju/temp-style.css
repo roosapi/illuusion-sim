@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+    background:#f1f1f1;
+    font:  rgb(17, 16, 16);
+    font-family: 'Lato';
+}
+
+a {
+    color: #3b1a7a;
+}
+
+a:visited {
+    color: #220852;
+}
+
+a:active, a:hover {
+    color: #6b27e9;
+}
+
+.horse{
+    width:80%;
+    max-width: 1200px;
+    margin:auto;
+}

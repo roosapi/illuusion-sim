@@ -1,0 +1,64 @@
+{% load static %}
+
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static "hopeapaju/temp-style.css" %}" >
+    </head>
+    <body>
+        <div class="horse">
+        <h1>{{ horse.name }}</h1>
+        {% if merits %}
+            {% for merit in merits %}
+            {{ merit.merit }} 
+            {% endfor %}
+        {% endif %}
+        <p>
+
+
+        </p>
+        <p>s. {{horse.dob.date|date:"d.m.Y" }} <a href="http://www.virtuaalihevoset.net/?hevoset/hevosrekisteri/hevonen.html?vh={{horse.vh}}/">{{horse.vh}}</a><br>
+            {{horse.colour}} {{ horse.breed }}, säkäkorkeus {{ horse.height }}cm<br>
+            omistaja {{owner}}, kasvattaja <a href="{{breeder.url}}">{{breeder.name}}</a><br>
+            painotus {{ horse.discipline }}ratsastus 
+            {% if horse.level %}({{ horse.level }})
+            {% else %}(koulutustaso ?) 
+            {% endif %}<br>
+            i: <a href="{{ lineage.sire.address }}">{{ lineage.sire.name }}</a><br>
+            e: <a href="{{ lineage.dam.address }}">{{ lineage.dam.name }}</a><br>
+        </p>
+        
+        <p>
+            {% if horse.discipline == 'koulu' %} 
+                KRJ porrastetut taso: {{ vrl_info.krj.level }}
+            {% elif  horse.discipline == 'este' %} 
+                ERJ porrastetut taso: {{ vrl_info.erj.level }}
+            {% elif  horse.discipline == 'kentta' %}
+                KERJ porrastetut taso:  {{ vrl_info.kerj.level }}
+            {% endif %}
+            </p>
+
+            <div>
+                    <p>{{ horse.final_description |safe }}</p>
+                </div>
+
+        <h2>Jälkeläiset</h2>
+        <p>
+            {% if offspring %}
+                {% for foal in offspring %}
+                {{foal.sex}} <a href="{{foal.address}}">{{foal.name}}</a> s. {{foal.dob.date|date:"d.m.Y"}} (
+                    {% if horse.sex == 'ori' %} 
+                        e. {{foal.dam.name}}
+                    {% else %} 
+                        i. {{foal.sire.name}}
+                    {% endif %}
+                    )<br>
+                 {%endfor%}
+            {% endif %}
+
+        </p>
+
+    </div>
+    </body>
+
+</html>
