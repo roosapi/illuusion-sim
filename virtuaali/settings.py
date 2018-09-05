@@ -106,7 +106,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "tallit/hopepaju/static"),
+    os.path.join(BASE_DIR, "tallit/hopeapaju/static"),
 ]
 STATIC_URL = '/static/'
 STATIC_ROOT =  os.path.join(BASE_DIR, "static")
