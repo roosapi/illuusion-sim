@@ -6,6 +6,10 @@ from django.template import loader
 from tallit.models import Horse, Merit
 import tallit.services as services
 
+def index(request):
+    template = loader.get_template('hopeapaju/index.html')
+    return HttpResponse(template.render({}, request))
+
 def horse(request, slug):
     horse = Horse.objects.select_related('sire', 'dam', 'breeder').get(address=slug)
     #print(slug, horse.name)
@@ -15,7 +19,17 @@ def horse(request, slug):
     elif horse.sex == 'tamma':
         offspring = Horse.objects.filter(dam=horse.id)
 
+    for foal in offspring:
+        if foal.stable == 'hopeapaju':
+            foal.address = '../'+foal.address
+        
+    sire = horse.sire
+    if sire.stable == 'hopeapaju':
+        sire.address = '../'+sire.address
 
+    dam = horse.dam
+    if dam.stable == 'hopeapaju':
+        dam.address = '../'+dam.address
     lines = {}
     vrl = services.get_vrl_info(horse.vh)
     
@@ -29,7 +43,7 @@ def horse(request, slug):
         'horse': horse,
         'owner': horse.owner,
         'breeder': horse.breeder,
-        'lineage': {'sire':horse.sire, 'dam':horse.dam},
+        'lineage': {'sire':sire, 'dam':horse.dam},
         'vrl_info': vrl,
         'offspring': offspring,
         'merits': merits,

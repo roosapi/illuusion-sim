@@ -46,7 +46,7 @@
         <p>
             {% if offspring %}
                 {% for foal in offspring %}
-                {{foal.sex}} <a href="{{foal.address}}">{{foal.name}}</a> s. {{foal.dob.date|date:"d.m.Y"}} (
+                {{foal.sex}} <a href="{{ foal.address }}">{{foal.name}}</a> s. {{foal.dob.date|date:"d.m.Y"}} (
                     {% if horse.sex == 'ori' %} 
                         e. {{foal.dam.name}}
                     {% else %} 

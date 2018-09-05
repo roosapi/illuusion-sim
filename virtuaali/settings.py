@@ -20,13 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&(yuno%$i08g5jcux+l@^pz$&e@uf)43-)m739z1o==c)g%f8)'
+#SECRET_KEY = '&(yuno%$i08g5jcux+l@^pz$&e@uf)43-)m739z1o==c)g%f8)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+#DEBUG = False
+#ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -71,21 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'virtuaali.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'illuusion-sim',
-        'USER': 'hopeapaju',
-        'PASSWORD': 'hopeapaju',
-
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -110,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fi'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Helsinki'
 
 USE_I18N = True
 
@@ -127,3 +110,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "tallit/hopepaju/static"),
 ]
 STATIC_URL = '/static/'
+
+

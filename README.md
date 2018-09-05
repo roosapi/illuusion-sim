@@ -1,7 +1,5 @@
 # TODO:
-- reorganise the database _again_
-    - check old laptop
-    - do what needs to be done
-    - regenerate models
+
 - horse page essentials + main page
+    - change all horse addresses to actual complete address instead of the slug
 - setup digitalocean
