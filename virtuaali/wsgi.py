@@ -10,10 +10,9 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 import os, sys
 
 from django.core.wsgi import get_wsgi_application
-from django.conf import settings
 
-sys.path.append(settings.BASE_DIR)
-sys.path.append(os.environ.get('DJANGO_VENV_PATH'))
+sys.path.append('/home/roosa/illuusion-sim')
+sys.path.append('/home/roosa/illuusion_prod/lib/python3.5/site-packages')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "virtuaali.settings")
 
