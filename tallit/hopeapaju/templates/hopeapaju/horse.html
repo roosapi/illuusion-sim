@@ -81,7 +81,18 @@
             {% endif %}
 
         </p>
-
+        <h2>Kilpailut</h2>
+        {% if competitions %}
+        {% for c in competitions %}
+         {{ c.discipline }} ({{ c.date|date:"d.m.Y" }})
+         {% if c.url %} 
+         <a href="{{ c.url }}">kutsu</a>
+         {% else %}
+         {{ c.location }}
+         {% endif %}
+         {{ c.result }} / {{c.participants}}<br>
+        {% endfor %}
+        {% endif %}
     </div>
     </body>
 
