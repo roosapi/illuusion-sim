@@ -8,10 +8,21 @@
     <body>
         <div class="horse">
             <h1>Hopeapajun hevoset</h1>
-        {% for horse in horses %}
 
-        <a href="{{ horse.address }}">{{ horse.name }}</a> ({{ horse.breed }} {{ horse.sex }})<br>
-        {% endfor %}
+            {% for breed in horses %}
+                <h2>{{ breed.title }}</h2>
+                {% for horse in breed.horses %}
+                <a href="{{ horse.address }}">{{ horse.name }}</a> ( {{ horse.breed }} {{ horse.sex }}, 
+                {% if horse.pedigree == '0' %}
+                evm-suku
+                {% else %}
+                {{horse.pedigree}}-polvinen suku
+                {% endif %}
+                )<br>
+                {% endfor %}
+            {% endfor %}
+
+
 
         <h1>Muistoissa</h1>
         {% for horse in deceased  %}

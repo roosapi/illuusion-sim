@@ -51,10 +51,15 @@ def horse(request, slug):
 
 
 def horses(request):
-    horses = Horse.objects.filter(stable='Hopeapaju').order_by('breed', 'sex')
+    horses = Horse.objects.filter(stable='Hopeapaju').order_by('breed','sex','pedigree','dob')
     template = loader.get_template('hopeapaju/horses.html')
     context = {
-        'horses':horses.filter(status=0),
+        'horses': [
+            {'title':'Hannover', 'horses':horses.filter(status=0,breed='hannover')},
+            {'title':'Holstein', 'horses':horses.filter(status=0,breed='holstein')},
+            { 'title':'Suomenhevonen', 'horses':horses.filter(status=0,breed='suomenhevonen')},
+            {'title':'Myynnissä', 'horses':horses.filter(status=1)}
+            ],
         'deceased':horses.filter(status=2),
         }
     return HttpResponse(template.render(context, request))
