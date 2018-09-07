@@ -26,10 +26,12 @@ def horse(request, slug):
     if int(horse.pedigree) < 3:
         maxgen = 2
     lines = horseutils.get_horse_pedigree(horse, maxgen)
-    vrl = services.get_vrl_info(horse.vh)
-    
+    vrl = {}
+    if horse.vh:
+        vrl = horseutils.get_vrl_info(horse.vh)
     merits = Merit.objects.filter(horse=horse.id)
     horse.final_description = horse.description.replace(r'\n', '</p><p>')
+    horse.current_level = horseutils.get_horse_level(horse, horse.discipline)
 
     template = loader.get_template('hopeapaju/horse.html')
     context = {

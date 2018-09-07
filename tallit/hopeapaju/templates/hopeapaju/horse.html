@@ -25,7 +25,7 @@
             {{horse.colour}} {{ horse.breed }}, säkäkorkeus {{ horse.height }}cm<br>
             omistaja {{owner}}, kasvattaja <a href="{{breeder.url}}">{{breeder.name}}</a><br>
             painotus {{ horse.discipline }}ratsastus 
-            {% if horse.level %}({{ horse.level }})
+            {% if horse.current_level %}({{ horse.current_level }})
             {% else %}(koulutustaso ?) 
             {% endif %}<br>
         </p>
