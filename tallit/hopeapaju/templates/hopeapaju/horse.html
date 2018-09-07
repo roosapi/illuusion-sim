@@ -17,10 +17,7 @@
             <a href="{{ merit.url }}">{{ merit.merit }}</a> 
             {% endfor %}
         {% endif %}
-        <p>
 
-
-        </p>
         <p>s. {{horse.dob.date|date:"d.m.Y" }} <a href="http://www.virtuaalihevoset.net/?hevoset/hevosrekisteri/hevonen.html?vh={{horse.vh}}/">{{horse.vh}}</a><br>
             {{horse.colour}} {{ horse.breed }}, säkäkorkeus {{ horse.height }}cm<br>
             omistaja {{owner}}, kasvattaja <a href="{{breeder.url}}">{{breeder.name}}</a><br>
@@ -31,18 +28,31 @@
         </p>
         
         <p>
-            {% if horse.discipline == 'koulu' %} 
-                KRJ porrastetut taso: {{ vrl_info.krj.level }}
-            {% elif  horse.discipline == 'este' %} 
-                ERJ porrastetut taso: {{ vrl_info.erj.level }}
-            {% elif  horse.discipline == 'kentta' %}
-                KERJ porrastetut taso:  {{ vrl_info.kerj.level }}
-            {% endif %}
-            </p>
+            Kilpailee
+        {% if horse.discipline == 'koulu' %} 
+            KRJ porrastetuissa tasolla: {{ vrl_info.krj.level }}
+        {% elif  horse.discipline == 'este' %} 
+            ERJ porrastetuissa tasolla: {{ vrl_info.erj.level }}
+        {% elif  horse.discipline == 'kentta' %}
+            KERJ porrastetuissa tasolla:  {{ vrl_info.kerj.level }}
+        {% endif %}
+        </p>
 
-            <div>
-                    <p>{{ horse.final_description |safe }}</p>
-                </div>
+        <div>
+           <p>{{ horse.final_description |safe }}</p>
+        </div>
+
+        <p>
+            {% if images %}
+            {% for img in images %}
+            <a href="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/{{ img.name }}?img=full"><img src="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/Pienet/{{ img.name }}?img=full" style="border:0;  height:120px;"></a>
+            {% endfor %}
+            <br>&copy; <a href="{{ images.0.copy.url }}">{{ images.0.copy.name }}</a>
+            {% if images.0.copy.license %}
+            (<a href="{{ images.0.copy.license_url }}">{{ images.0.copy.license }}</a>)
+            {% endif %}
+            {% endif %}
+        </p>
 
         <h2>Sukutaulu</h2>  
                
@@ -96,8 +106,9 @@
         {% endfor %}
         {% endif %}
 
-        <h2>Kilpailut</h2>
+        
         {% if competitions %}
+        <h2>Kilpailut</h2>
         {% for c in competitions %}
          {{ c.discipline }} ({{ c.date|date:"d.m.Y" }})
          {% if c.url %} 
