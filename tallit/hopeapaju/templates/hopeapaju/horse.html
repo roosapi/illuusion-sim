@@ -7,10 +7,14 @@
     </head>
     <body>
         <div class="horse">
-        <h1>{{ horse.name }}</h1>
+        <h1>{{ horse.name }}
+            {% if horse.status == 2 %}
+            &#10013;
+            {% endif %}
+        </h1>
         {% if merits %}
             {% for merit in merits %}
-            {{ merit.merit }} 
+            <a href="{{ merit.url }}">{{ merit.merit }}</a> 
             {% endfor %}
         {% endif %}
         <p>
@@ -24,8 +28,6 @@
             {% if horse.level %}({{ horse.level }})
             {% else %}(koulutustaso ?) 
             {% endif %}<br>
-            i: <a href="{{ lineage.sire.address }}">{{ lineage.sire.name }}</a><br>
-            e: <a href="{{ lineage.dam.address }}">{{ lineage.dam.name }}</a><br>
         </p>
         
         <p>
@@ -42,16 +44,24 @@
                     <p>{{ horse.final_description |safe }}</p>
                 </div>
 
-        <h2>Sukutaulu</h2>
-
-        <table>
+        <h2>Sukutaulu</h2>  
+               
+        <table class="pedigree">
             <tr>
-        {% for h in lineage.lines.pedigree %}
-        <td rowspan="{{h.rowspan}}">{{ h.prefix }}. <a href="{{ h.horse.address }}">{{ h.horse.name }}</a></td>
+        {% for h in lineage.pedigree %}
+        <td rowspan="{{h.rowspan}}">          
+            {{ h.prefix }}. 
+            {% if not h.horse %}
+            tuntematon
+            {% elif not h.horse.evm %} 
+            <a href="{{ h.horse.address }}">{{ h.horse.name }}</a> <small>{{ h.merits }}</small>
+            {% else %}
+            {{ h.horse.name }}
+            {% endif %}
+        </td>
         {% if h.rowspan == 1 %}
         </tr><tr>
         {% endif %}
-
         {% endfor %}
             </tr>
         </table>
