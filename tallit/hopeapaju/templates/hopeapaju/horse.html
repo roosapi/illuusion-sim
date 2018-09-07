@@ -81,6 +81,21 @@
             {% endif %}
 
         </p>
+
+        {% if shows %}
+        <h2>Näyttelyt</h2>
+        {% for c in shows %}
+         {{ c.type }} ({{ c.date|date:"d.m.Y" }})
+         {% if c.url %} 
+         <a href="{{ c.url }}">{{ c.location }}</a>
+         {% else %}
+         {{ c.location }}
+         {% endif %}
+         {{ c.class_field }} -
+         {{ c.evaluation }} (tuom. {{c.judge}})<br>
+        {% endfor %}
+        {% endif %}
+
         <h2>Kilpailut</h2>
         {% if competitions %}
         {% for c in competitions %}

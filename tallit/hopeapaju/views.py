@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 # Create your views here.
 
-from tallit.models import Horse, Merit, Competition
+from tallit.models import Horse, Merit, Competition, Show
 from . import horseutils
 import tallit.services as services
 
@@ -33,6 +33,7 @@ def horse(request, slug):
     horse.final_description = horse.description.replace(r'\n', '</p><p>')
     horse.current_level = horseutils.get_horse_level(horse, horse.discipline)
     competitions = Competition.objects.filter(horse=horse.id).order_by('discipline', 'date')
+    shows = Show.objects.filter(horse=horse.id).order_by('type', 'date')
 
     template = loader.get_template('hopeapaju/horse.html')
     context = {
@@ -43,7 +44,8 @@ def horse(request, slug):
         'vrl_info': vrl,
         'offspring': offspring,
         'merits': merits,
-        'competitions': competitions
+        'competitions': competitions,
+        'shows': shows
     }
     return HttpResponse(template.render(context, request))
 
