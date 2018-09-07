@@ -42,6 +42,20 @@
                     <p>{{ horse.final_description |safe }}</p>
                 </div>
 
+        <h2>Sukutaulu</h2>
+
+        <table>
+            <tr>
+        {% for h in lineage.lines.pedigree %}
+        <td rowspan="{{h.rowspan}}">{{ h.prefix }}. <a href="{{ h.horse.address }}">{{ h.horse.name }}</a></td>
+        {% if h.rowspan == 1 %}
+        </tr><tr>
+        {% endif %}
+
+        {% endfor %}
+            </tr>
+        </table>
+
         <h2>Jälkeläiset</h2>
         <p>
             {% if offspring %}
