@@ -1,0 +1,403 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa|Lato');
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #448C86;
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato';
+}
+
+html {
+  padding: 0;
+  margin: 0;
+}
+
+.top-bg {
+  background: url(top_bg.gif)#095443;
+  height: 500px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  border-bottom: 7px solid #86AFB0;
+}
+
+.hk {
+  font-size: 17px;
+  text-transform: uppercase;
+  color: #448C86;
+  display: block;
+  margin-left: 28px;
+  text-align: right;
+  margin-bottom: -25px;
+}
+
+.header {
+  position: relative;
+  color: #f5f2ec;
+  width: 70%;
+  margin-top: 110px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Comfortaa';
+}
+
+.header h1 {
+  display: block;
+  margin-bottom: 0px;
+  margin-top: 0;
+  font-weight: normal;
+  font-size: 43px;
+  min-width:30%;
+  float: left;
+  height: 100%;
+  line-height: 55px;
+}
+
+.header .subhead {
+  text-align: right;
+  position: absolute;
+  font-size: 13px;
+  background: #095443;
+  bottom: 25px;
+  right: 25px;
+  text-transform: uppercase;
+  border: 1px solid #efeae0;
+  padding: 9px 13px;
+}
+
+.header .subhead a {
+  color: #efeae0;
+  text-decoration: none;
+}
+
+.main, .main-wide, .main-horse {
+  position: relative;
+  background: #f5f2ec;
+  width: 70%;
+  margin-top: 0px;
+  margin-bottom: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  border-left: 3px solid #86AFB0;
+  border-right: 3px solid #86AFB0;
+  border-top: 3px solid #86AFB0;
+}
+
+.main {
+  grid-template-columns: 300px auto;
+  grid-template-areas: 'side menu' 'side content' 'footer footer';
+}
+
+.main-wide {
+  grid-template-columns: auto;
+  grid-template-areas: 'menu' 'content' 'footer';
+}
+
+.main-horse {
+  grid-template-columns: 300px auto;
+  grid-template-areas: 'side content' 'footer footer';
+}
+
+.grid-container {
+  display: grid;
+  grid-column-gap: 0px;
+}
+
+
+.menu {
+  padding: 0;
+  grid-area: menu;
+  height: 47px;
+  background: #448C86;
+  font-family: 'Comfortaa';
+}
+
+.menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 100%;
+  height: 100%;
+}
+
+.menu li {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  width: 33.33333333%;
+  text-align: center;
+  height: 100%;
+}
+
+.menu a {
+  color: #f5f2ec;
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-top: 14px;
+}
+
+.menu a:visited {
+  color: #f5f2ec;
+}
+
+.menu a:hover {
+  color: #f5f2ec;
+  background: #095443;
+}
+
+.sidebar {
+  border-right: 3px solid #DED3C0;
+  background: #efeae0;
+  color: #524e47;
+  grid-area: side;
+  width: 300px;
+  font-size: 0.9em;
+  padding-bottom: 20px;
+}
+
+.sidebar-img {
+  width: 297px;
+  margin-bottom: 15px;
+}
+
+.side-content {
+  width: 100%;
+  margin: 10px 20px;
+}
+
+.content {
+  grid-area: content;
+  padding: 30px 45px;
+}
+
+.footer {
+  grid-area: footer;
+  height: 35px;
+  background: #DED3C0;
+  color: #524e47;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
+
+table.breeding {
+  width: 100%;
+}
+
+/**------------------------------------------------------------------- HORSELIST START */
+
+.horse-grid-container {
+  display: grid;
+  grid-column-gap: 17px;
+  grid-row-gap: 23px;
+  grid-template-columns: repeat(auto-fill, minmax(254px, 1fr));
+}
+
+.horse-grid-container-small {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-row-gap: 23px;
+  grid-template-columns: repeat(auto-fill, minmax(390px, 1fr));
+}
+
+a.card-link {
+  text-decoration: none;
+}
+
+a.card-link:hover .horse-card-name, a.card-link:hover .horse-card-name-small {
+  color: #448C86;
+}
+
+.horse-card {
+  border: 1px solid #DED3C0;
+  background: #efeae0;
+  padding: 15px;
+  width: 254px;
+  margin: auto;
+}
+
+.horse-card-small {
+  border: 1px solid #DED3C0;
+  background: #efeae0;
+  padding: 11px;
+  width: 390px;
+  margin: auto;
+  font-size: 0.9em;
+}
+
+.horse-card-img {
+  width: 220px;
+  height: 240px;
+}
+
+.horse-card-img-small {
+  width: 140px;
+  height: 110px;
+  float: left;
+  margin-right: 13px;
+}
+
+.horse-card-name {
+  display: block;
+  color: #9E0721;
+  width: 220px;
+  font-size: 1.1em;
+  margin-top: 7px;
+  margin-bottom: 5px;
+}
+
+.horse-card-name-small {
+  display: block;
+  float: left;
+  color: #9E0721;
+  width: 210px;
+  font-size: 1.1em;
+  margin-top: 2px;
+  margin-bottom: 3px;
+}
+
+.horse-card-merit {
+  display: block;
+  margin-top: 3px;
+  margin-bottom: 0;
+  color: #448C86;
+}
+
+/**------------------------------------------------------------------- HORSEPAGE START */
+
+ul.horse-info {
+  list-style-type: none;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  font-size: 1.1em;
+}
+
+.horse-info li {
+  margin-top: 9px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #DED3C0;
+}
+
+table.horse-data, table.pedigree {
+  width: 100%;
+}
+
+table.pedigree {
+  border-collapse: collapse;
+}
+
+table.pedigree td {
+  border: 1px solid #DED3C0;
+}
+
+.horse-gallery {
+  width: 100%;
+  margin: 15px 0;
+}
+
+.horse-gallery p {
+  margin-top: 3px;
+  font-size: 0.9em;
+  color: #524e47;
+}
+
+.horse-gallery-img {
+  height: 130px;
+  margin-right: 5px;
+  border: 3px solid #DED3C0;
+}
+
+/*------------------------------------------------ GENERAL*/
+
+a {
+  color: #448C86;
+}
+
+a:visited {
+  color: #095443;
+}
+
+a:hover {
+  color: #9E0721;
+}
+
+h2 {
+  color: #095443;
+  font-family: 'Comfortaa';
+}
+
+h3 {
+  color: #095443;
+  font-family: 'Comfortaa';
+}
+
+table {
+  border: 1px solid #DED3C0;
+  background: #efeae0;
+  padding: 11px;
+  border-spacing: 0px;
+}
+
+td, th {
+  padding: 9px 15px;
+}
+
+th {
+  background: #448C86;
+  text-align: left;
+  color: #f5f2ec;
+  font-weight: normal;
+}
+
+td {
+  border-bottom: 1px solid #DED3C0;
+  margin: 0;
+}
+
+tr:last-child td {
+  border-bottom: 0;
+}
+
+/*------------------------------------------------- MOBILE */
+
+@media only screen and (max-width: 1550px) {
+  .header, .main, .main-wide {
+    width: 85%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .header, .main, .main-wide {
+    width: 85%;
+  }
+  .grid-container {
+    grid-template-columns: auto;
+    grid-template-areas: 'menu' 'content' 'side' 'footer';
+  }
+  .main-horse {
+    grid-template-areas: 'side' 'content' 'footer';
+  }
+  .sidebar {
+    width: 100%;
+  }
+  .sidebar-img {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .header, .main, .main-wide, .main-horse {
+    width: 95%;
+  }
+}

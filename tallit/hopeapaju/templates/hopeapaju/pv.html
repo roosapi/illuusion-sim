@@ -1,0 +1,49 @@
+{% extends "hopeapaju/pv_base.html" %}
+{% load static %}
+{% block content %}
+            <p>Hopeapajun Kartano uudistuu - sivujen sisältö toistaiseksi puutteellinen.</p>
+
+            <h2>Kasvatus</h2>
+            <p>
+                Sed imperdiet nunc metus, ac pharetra ex mattis sed. Mauris ac mattis nulla. Nam ut odio vulputate, maximus nisi eu, fermentum lorem. In id cursus sem. Morbi ut arcu felis. Aenean ac leo vitae magna commodo iaculis eget sed ligula. Phasellus elementum leo elit, lobortis porta elit facilisis id. Cras tincidunt elit diam, a elementum massa volutpat a. Suspendisse ligula urna, mattis nec odio vel, tincidunt blandit lorem.
+            </p>
+            <h3>{% now "Y" %}</h3>
+            <table class="breeding">
+                <tr>
+                    <th colspan="5">Hannover</th>
+                </tr>
+                {% for horse in hann %}
+                <tr>
+                    <td>s.{{ horse.dob|date:"d.m.Y" }}</td>
+                    <td>{{ horse.sex|make_list|first }}. <a href="{{ horse.address }}">{{ horse.name }}</a></td>
+                    <td>i. <a href="{{ horse.sire.address }}">{{ horse.sire.name }}</a></td>
+                    <td>e. <a href="{{ horse.dam.address }}">{{ horse.dam.name }}</a></td>
+                    <td> {% if horse.owner %}
+                        {{horse.owner}} 
+                        {% else %}
+                        <b>myynnissä</b>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+               
+                <tr>
+                    <th colspan="5">Holstein</th>
+                </tr>
+                {% for horse in hols %}
+                <tr>
+                    <td>s.{{ horse.dob|date:"d.m.Y" }}</td>
+                    <td>{{ horse.sex|make_list|first }}. <a href="{{ horse.address }}">{{ horse.name }}</a></td>
+                    <td>i. <a href="{{ horse.sire.address }}">{{ horse.sire.name }}</a></td>
+                    <td>e. <a href="{{ horse.dam.address }}">{{ horse.dam.name }}</a></td>
+                    <td> {% if horse.owner %}
+                            {{horse.owner}} 
+                            {% else %}
+                            <b>myynnissä</b>
+                            {% endif %}
+                        </td>
+                </tr>
+                {% endfor %}           
+                </table>
+
+{% endblock %}

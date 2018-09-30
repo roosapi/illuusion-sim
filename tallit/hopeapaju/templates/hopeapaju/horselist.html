@@ -1,0 +1,81 @@
+{% extends base_template %}
+
+{% block containerdef %}
+<div class="main-wide grid-container">
+{% endblock %}
+
+{% block sidebar %}   
+{% endblock %}
+
+{% block content %}
+
+<h2>{{ breed }} - orit</h2>
+<div class="horse-grid-container">
+    {% for horse in stallions %}
+    <div class="horse-card">
+        <a href="../hevoset/{{ horse.address }}" class="card-link">
+        <img src="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/Lista/{{horse.address}}.jpg/_full.jpg" class="horse-card-img">
+        <span class="horse-card-name">{{ horse.name }}</span>
+    </a>
+        i. {{horse.sire.name}}<br>
+        e. {{horse.dam.name}}<br>
+        {% if horse.pedigree == '0' %}
+        evm-suku
+        {% else %}
+        {{horse.pedigree}}-polvinen suku
+        {% endif %}
+        <span class="horse-card-merit">
+            {% if horse.merit.all %}
+            {% for merit in horse.merit.all %}
+            {{merit.merit}}
+            {% endfor %}
+            {% else %}
+            &nbsp;
+            {% endif %}
+            </span>
+    </div>
+    {% endfor %}
+</div>
+    <h2>{{ breed }} - tammat</h2>
+    <div class="horse-grid-container-small">
+    {% for horse in mares %}
+    <div class="horse-card-small">
+        <a href="../hevoset/{{ horse.address }}" class="card-link">
+        <img src="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/Lista/{{horse.address}}.jpg/_full.jpg" class="horse-card-img-small">
+        <span class="horse-card-name-small">{{ horse.name }}</span>
+    </a>
+        i. {{horse.sire.name}}<br>
+        e. {{horse.dam.name}}<br>
+        {% if horse.pedigree == '0' %}
+        evm-suku
+        {% else %}
+        {{horse.pedigree}}-polvinen suku
+        {% endif %}
+        <span class="horse-card-merit">
+            {% if horse.merit.all %}
+            {% for merit in horse.merit.all %}
+            {{merit.merit}}
+            {% endfor %}
+            {% else %}
+            &nbsp;
+            {% endif %}
+            </span>
+    </div>
+    {% endfor %}
+</div>
+    <h2>{{ breed }} - muistoissa</h2>
+    <p>
+    {% for horse in deceased  %}
+
+    {{ horse.sex|make_list|first }}. <a href="../hevoset/{{ horse.address }}">{{ horse.name }}</a> 
+    {% if horse.merit.all %}
+            {% for merit in horse.merit.all %}
+            {{merit.merit}}
+            {% endfor %}
+            {% else %}
+            &nbsp;
+            {% endif %}<br>
+    {% endfor %}
+    </p>
+
+{% endblock %}

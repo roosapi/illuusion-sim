@@ -1,125 +1,159 @@
-{% load static %}
+{% extends "hopeapaju/horse_base.html" %}
 
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{% static "hopeapaju/temp-style.css" %}" >
-    </head>
-    <body>
-        <div class="horse">
-        <h1>{{ horse.name }}
-            {% if horse.status == 2 %}
-            &#10013;
-            {% endif %}
-        </h1>
-        {% if merits %}
-            {% for merit in merits %}
-            <a href="{{ merit.url }}">{{ merit.merit }}</a> 
-            {% endfor %}
-        {% endif %}
+{% block header %}
+<h1>{{ horse.name }}</h1>
 
-        <p>s. {{horse.dob.date|date:"d.m.Y" }} <a href="http://www.virtuaalihevoset.net/?hevoset/hevosrekisteri/hevonen.html?vh={{horse.vh}}/">{{horse.vh}}</a><br>
-            {{horse.colour}} {{ horse.breed }}, säkäkorkeus {{ horse.height }}cm<br>
-            omistaja {{owner}}, kasvattaja <a href="{{breeder.url}}">{{breeder.name}}</a><br>
-            painotus {{ horse.discipline }}ratsastus 
-            {% if horse.current_level %}({{ horse.current_level }})
+<span class="subhead">
+    <a href="
+    {% if horse.breed == 'hannover' or horse.breed == 'holstein' or horse.breed == 'suomenhevonen' %}
+    ../../{{ horse.breed }}
+    {% else %}
+    ../
+    {% endif %}
+    ">Takaisin hevoslistaan</a>
+</span>
+{% endblock %}
+
+{% block sidebar %}
+{% if images %}
+<img src="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/{{images.0.name}}?img=full" class="sidebar-img">
+{% endif %}
+<ul class="horse-info">
+    <li><a href="http://www.virtuaalihevoset.net/?hevoset/hevosrekisteri/hevonen.html?vh={{horse.vh}}/">{{horse.vh}}</a></li>
+    <li>{{ horse.breed }} {{ horse.sex }}</li>
+    <li>s. {{ horse.dob.date|date:"d.m.Y" }} ( ? v. )</li>
+    <li>{{ horse.colour }}, {{ horse.height }}cm
+    <li>omistaja <a href="mailto:virtuaali&commat;illuusion.net">Rim</a> / VRL-02488 
+    <li>kasvattaja {% if breeder.url %}<a href="{{ breeder.url }}">{{ breeder.name }}</a>
+        {% else %} {{ breeder.name }} {% endif %}
+    <li>&nbsp;  </li>
+    <li>{{ horse.discipline }}painotus {% if horse.current_level %}({{ horse.current_level }})
             {% else %}(koulutustaso ?) 
-            {% endif %}<br>
-        </p>
-        
-        <p>
-            Kilpailee
-        {% if horse.discipline == 'koulu' %} 
-            KRJ porrastetuissa tasolla: {{ vrl_info.krj.level }}
+            {% endif %}</li>
+    <li>porrastetut taso {% if horse.discipline == 'koulu' %} 
+            {{ vrl_info.krj.level }} (KRJ)
         {% elif  horse.discipline == 'este' %} 
-            ERJ porrastetuissa tasolla: {{ vrl_info.erj.level }}
+            {{ vrl_info.erj.level }} (ERJ)
         {% elif  horse.discipline == 'kentta' %}
-            KERJ porrastetuissa tasolla:  {{ vrl_info.kerj.level }}
-        {% endif %}
-        </p>
+            {{ vrl_info.kerj.level }} (KERJ)
+        {% endif %}</li>
+</ul>
+<div class="side-content">
+<h3>Saavutukset</h3>
 
-        <div>
-           <p>{{ horse.final_description |safe }}</p>
-        </div>
+{% if merits %}
+{% for merit in merits %}
+<p><b>{{ merit.merit }}</b><br>{{merit.info}}<br><a href="{{ merit.url }}">tilaisuus</a></p>
+{% endfor %}
+{% endif %}
 
-        <p>
-            {% if images %}
-            {% for img in images %}
-            <a href="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/{{ img.name }}?img=full"><img src="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/Pienet/{{ img.name }}?img=full" style="border:0;  height:120px;"></a>
-            {% endfor %}
-            <br>&copy; <a href="{{ images.0.copy.url }}">{{ images.0.copy.name }}</a>
-            {% if images.0.copy.license %}
-            (<a href="{{ images.0.copy.license_url }}">{{ images.0.copy.license }}</a>)
-            {% endif %}
-            {% endif %}
-        </p>
+</div>
 
-        <h2>Sukutaulu</h2>  
-               
-        <table class="pedigree">
-            <tr>
-        {% for h in lineage.pedigree %}
-        <td rowspan="{{h.rowspan}}">          
-            {{ h.prefix }}. 
-            {% if not h.horse %}
-            tuntematon
-            {% elif not h.horse.evm %} 
-            <a href="{{ h.horse.address }}">{{ h.horse.name }}</a> <small>{{ h.merits }}</small>
-            {% else %}
-            {{ h.horse.name }}
-            {% endif %}
-        </td>
-        {% if h.rowspan == 1 %}
-        </tr><tr>
-        {% endif %}
-        {% endfor %}
-            </tr>
-        </table>
+{% endblock %}
 
-        <h2>Jälkeläiset</h2>
-        <p>
-            {% if offspring %}
-                {% for foal in offspring %}
-                {{foal.sex}} <a href="{{ foal.address }}">{{foal.name}}</a> s. {{foal.dob.date|date:"d.m.Y"}} (
-                    {% if horse.sex == 'ori' %} 
-                        e. {{foal.dam.name}}
-                    {% else %} 
-                        i. {{foal.sire.name}}
+
+{% block content %}
+<p>{{ horse.final_description |safe }}</p>
+
+<table class="pedigree">
+
+        <tr>
+                {% for h in lineage.pedigree %}
+                <td rowspan="{{h.rowspan}}">          
+                    {{ h.prefix }}. 
+                    {% if not h.horse %}
+                    tuntematon
+                    {% elif not h.horse.evm %} 
+                    <a href="{{ h.horse.address }}">{{ h.horse.name }}</a><br> <small>{{ h.merits }}&nbsp;</small>
+                    {% else %}
+                    {{ h.horse.name }}
                     {% endif %}
-                    )<br>
-                 {%endfor%}
-            {% endif %}
+                </td>
+                {% if h.rowspan == 1 %}
+                </tr><tr>
+                {% endif %}
+                {% endfor %}
+                    </tr>
+</table>
 
-        </p>
 
-        {% if shows %}
-        <h2>Näyttelyt</h2>
-        {% for c in shows %}
-         {{ c.type }} ({{ c.date|date:"d.m.Y" }})
-         {% if c.url %} 
-         <a href="{{ c.url }}">{{ c.location }}</a>
-         {% else %}
-         {{ c.location }}
-         {% endif %}
-         {{ c.class_field }} -
-         {{ c.evaluation }} (tuom. {{c.judge}})<br>
+<div class="horse-gallery">
+        {% if images %}
+        {% for img in images %}
+        <a href="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/{{ img.name }}?img=full" class="lightbox-gallery">
+            <img src="https://illuusion.kuvat.fi/kuvat/Hopeapaju/Hevoset/Pienet/{{ img.name }}?img=full" class="horse-gallery-img"></a>
         {% endfor %}
+        <p>&copy; <a href="{{ images.0.copy.url }}">{{ images.0.copy.name }}</a>
+        {% if images.0.copy.license %}
+        (<a href="{{ images.0.copy.license_url }}">{{ images.0.copy.license }}</a>)
+        {% endif %}</p>
         {% endif %}
+</div>
 
+<h2>Jälkeläiset</h2>
+
+<table class="horse-data">
+        {% for foal in offspring %}
+        <tr>
+            <td>{{ foal.sex|make_list|first }}. <a href="{{ foal.address }}">{{foal.name}}</a></td>
+            <td>s. {{foal.dob.date|date:"d.m.Y"}}</td>
+
+            <td>{% if horse.sex == 'ori' %} 
+                    e. <a href="{{ foal.dam.address }}">{{foal.dam.name}}</a>
+                {% else %} 
+                    i. <a href="{{ foal.sire.address }}">{{foal.sire.name}}</a>
+                {% endif %}</td>
+            <td>om. {{ foal.owner }}</td>
+            </tr>
+         {%endfor%}
+    </table>
+
+    {% if shows %}
+    <h2>Näyttelyt</h2>
+    <table class="horse-data">
+    {% for c in shows %}
+    <tr>
+     <td>{{ c.type }}</td> <td>{{ c.date|date:"d.m.Y" }}</td>
+     <td>{% if c.url %} 
+     <a href="{{ c.url }}">{{ c.location }}</a>
+     {% else %}
+     {{ c.location }}</td>
+     {% endif %}
+     <td>{{ c.class_field }}</td>
+     <td>{{ c.evaluation }}</td> <td>tuom. {{c.judge}}</td>
+     </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
         
-        {% if competitions %}
-        <h2>Kilpailut</h2>
-        {% for c in competitions %}
-         {{ c.discipline }} ({{ c.date|date:"d.m.Y" }})
-         {% if c.url %} 
-         <a href="{{ c.url }}">kutsu</a>
-         {% else %}
-         {{ c.location }}
-         {% endif %}
-         {{ c.result }} / {{c.participants}}<br>
-        {% endfor %}
-        {% endif %}
-    </div>
-    </body>
+    {% if competitions %}
+    <h2>Kilpailut</h2>
+    <table class="horse-data">
+    {% for c in competitions %}
+    <tr>
+        <td>{{forloop.counter}}.</td>
+     <td>{{ c.discipline }}</td> <td>{{ c.date|date:"d.m.Y" }}</td>
+     <td>{% if c.url %} 
+     <a href="{{ c.url }}">kutsu</a>
+     {% else %}
+     {{ c.location }}</td>
+     {% endif %}
+     <td>{{ c.result }} / {{c.participants}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    {% endif %}
 
-</html>
+
+
+    {% if texts %}
+    <h2>Päiväkirja</h2>
+    {% for text in texts %}
+    <h3>{{ text.title }} - {{ text.date|date:"d.m.Y" }} ({{ text.copy }})</h3>
+    <p>{{ text.text|safe }}</p>
+    {% endfor %}
+    {% endif %}
+
+
+    
+{% endblock %}

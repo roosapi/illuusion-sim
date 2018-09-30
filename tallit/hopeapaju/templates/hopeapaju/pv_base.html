@@ -1,0 +1,60 @@
+{% load static %}
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"></meta>
+
+    <link
+        rel="stylesheet"
+        href="{% static "hopeapaju/style.css" %}"
+    ></link>
+</head>
+
+<body>
+    <div class="top-bg"></div>
+
+    <div class="header">
+        <h1>
+            <span class="hk">Hopeapajun Kartano</span>
+            Silverbrand Sporthorses</h1>
+
+        <span class="subhead">
+            <a href="../sh">Suomenhevoset</a>
+        </span>
+    </div>
+
+    {% block containerdef %}
+    <div class="main grid-container">
+    {% endblock %}
+    {% block menu %}
+        <div class="menu grid-item">
+            <ul>
+                <li> <a href="../pv" >Kasvatus</a>
+                <li> <a href="../hannover">Hannover</a>
+                <li> <a href="../holstein">Holstein</a>
+            </ul>
+        </div>
+    {% endblock %}
+    {% block sidebar %}    
+     <div class="sidebar grid-item">
+            <img src="{% static "hopeapaju/frontpage.jpg" %}" class="sidebar-img">
+
+            <div class="side-content">
+                Rim VRL-02488 (virtuaali&commat;illuusion.net)<br>
+            </div>
+        </div>
+    {% endblock %}
+
+        <div class="content grid-item">
+            {% block content %}
+            {% endblock %}
+        </div>
+    
+        <div class="footer grid-item">
+            Virtuaalitalli  &copy; Silverbrand Sporthorses 2008-2018
+        </div>
+    </div>
+
+</body>
+</html>

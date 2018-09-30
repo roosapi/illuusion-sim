@@ -98,7 +98,7 @@ class HorseImg(models.Model):
 
 
 class HorseText(models.Model):
-    horse = models.ForeignKey(Horse, models.DO_NOTHING)
+    horse = models.ForeignKey(Horse, models.DO_NOTHING, related_name='horsetext')
     date = models.DateField()
     title = models.CharField(max_length=250)
     text = models.TextField()
@@ -111,7 +111,7 @@ class HorseText(models.Model):
 
 
 class Merit(models.Model):
-    horse = models.ForeignKey(Horse, models.DO_NOTHING)
+    horse = models.ForeignKey(Horse, models.DO_NOTHING, related_name='merit')
     merit = models.CharField(max_length=10)
     event = models.CharField(max_length=150, blank=True, null=True)
     date = models.DateField()
