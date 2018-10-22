@@ -8,6 +8,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Lato';
+  font-size: 16px;
 }
 
 html {
@@ -318,6 +319,10 @@ table.pedigree td {
   border: 3px solid #DED3C0;
 }
 
+.rip-subhead {
+  font-size:0.6em;
+}
+
 /*------------------------------------------------ GENERAL*/
 
 a {
@@ -372,13 +377,13 @@ tr:last-child td {
 /*------------------------------------------------- MOBILE */
 
 @media only screen and (max-width: 1550px) {
-  .header, .main, .main-wide {
+  .header, .main, .main-wide, .main-horse {
     width: 85%;
   }
 }
 
 @media only screen and (max-width: 1300px) {
-  .header, .main, .main-wide {
+  .header, .main, .main-wide, .main-horse {
     width: 85%;
   }
   .grid-container {

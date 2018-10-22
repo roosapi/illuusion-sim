@@ -53,6 +53,7 @@ def horselist(request, breed):
 def horse(request, slug):
     horse = Horse.objects.select_related('sire', 'dam', 'breeder').get(address=slug)
     offspring = []
+    horse.age = horseutils.get_horse_age(horse.dob)
     if horse.sex == 'ori':
         offspring = Horse.objects.filter(sire=horse.id)
     elif horse.sex == 'tamma':

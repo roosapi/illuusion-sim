@@ -22,5 +22,5 @@ import tallit
 urlpatterns = [
     path('v/', include('tallit.urls')),
     path('admin/', admin.site.urls),
-    re_path(r'^hopeapaju/*', RedirectView.as_view(pattern_name='hopeapaju:allhorses', permanent=False)),
+    re_path(r'^hopeapaju/*', RedirectView.as_view(pattern_name='hopeapaju:index', permanent=False)),
 ]

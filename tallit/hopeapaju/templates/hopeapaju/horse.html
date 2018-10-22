@@ -1,7 +1,12 @@
 {% extends "hopeapaju/horse_base.html" %}
 
 {% block header %}
-<h1>{{ horse.name }}</h1>
+<h1>{{ horse.name }}
+    {% if horse.status == 2 %}
+    <span class="rip-subhead">&#x271D; muistosivu</span>
+    {% endif %}
+
+</h1>
 
 <span class="subhead">
     <a href="
@@ -21,7 +26,7 @@
 <ul class="horse-info">
     <li><a href="http://www.virtuaalihevoset.net/?hevoset/hevosrekisteri/hevonen.html?vh={{horse.vh}}/">{{horse.vh}}</a></li>
     <li>{{ horse.breed }} {{ horse.sex }}</li>
-    <li>s. {{ horse.dob.date|date:"d.m.Y" }} ( ? v. )</li>
+    <li>s. {{ horse.dob.date|date:"d.m.Y" }} {% if horse.status != 2 %} ( {{ horse.age }} v. ) {% else %} &#x271D; {% endif %}</li>
     <li>{{ horse.colour }}, {{ horse.height }}cm
     <li>omistaja <a href="mailto:virtuaali&commat;illuusion.net">Rim</a> / VRL-02488 
     <li>kasvattaja {% if breeder.url %}<a href="{{ breeder.url }}">{{ breeder.name }}</a>

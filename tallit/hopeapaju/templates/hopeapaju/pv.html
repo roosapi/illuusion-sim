@@ -15,10 +15,16 @@
                 {% for horse in hann %}
                 <tr>
                     <td>s.{{ horse.dob|date:"d.m.Y" }}</td>
-                    <td>{{ horse.sex|make_list|first }}. <a href="{{ horse.address }}">{{ horse.name }}</a></td>
-                    <td>i. <a href="{{ horse.sire.address }}">{{ horse.sire.name }}</a></td>
-                    <td>e. <a href="{{ horse.dam.address }}">{{ horse.dam.name }}</a></td>
-                    <td> {% if horse.owner %}
+                    <td>{{ horse.sex|make_list|first }}. 
+                            {% if horse.owner == 'VRL-02488' %}
+                            <a href="../hevoset/{{ horse.address }}">{{ horse.name }}</a>
+                            {% else %}
+                            <a href="{{ horse.address }}">{{ horse.name }}</a>
+                            {% endif %}
+                            </td>
+                    <td>i. <a href="../hevoset/{{ horse.sire.address }}">{{ horse.sire.name }}</a></td>
+                    <td>e. <a href="../hevoset/{{ horse.dam.address }}">{{ horse.dam.name }}</a></td>
+                    <td> {% if horse.owner and horse.status != 1 %}
                         {{horse.owner}} 
                         {% else %}
                         <b>myynnissä</b>
@@ -33,12 +39,17 @@
                 {% for horse in hols %}
                 <tr>
                     <td>s.{{ horse.dob|date:"d.m.Y" }}</td>
-                    <td>{{ horse.sex|make_list|first }}. <a href="{{ horse.address }}">{{ horse.name }}</a></td>
-                    <td>i. <a href="{{ horse.sire.address }}">{{ horse.sire.name }}</a></td>
-                    <td>e. <a href="{{ horse.dam.address }}">{{ horse.dam.name }}</a></td>
-                    <td> {% if horse.owner %}
-                            {{horse.owner}} 
+                    <td>{{ horse.sex|make_list|first }}. 
+                            {% if horse.owner == 'VRL-02488' %}
+                            <a href="../hevoset/{{ horse.address }}">{{ horse.name }}</a>
                             {% else %}
+                            <a href="{{ horse.address }}">{{ horse.name }}</a>
+                            {% endif %}</td>
+                    <td>i. <a href="../hevoset/{{ horse.sire.address }}">{{ horse.sire.name }}</a></td>
+                    <td>e. <a href="../hevoset/{{ horse.dam.address }}">{{ horse.dam.name }}</a></td>
+                    <td> {% if horse.owner and horse.status != 1 %}
+                            {{horse.owner }} 
+                            {% else %} 
                             <b>myynnissä</b>
                             {% endif %}
                         </td>

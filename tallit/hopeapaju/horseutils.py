@@ -1,4 +1,11 @@
 import requests
+
+from datetime import datetime,timedelta
+from calendar import monthrange
+import pytz
+
+utc=pytz.UTC
+
 from tallit.models import Horse, Merit
 
 def get_vrl_info(vh):
@@ -18,6 +25,17 @@ def get_merit_string(horse):
     for m in merits:
         m_s.append(m.merit)
     return ' '.join(m_s)
+
+def get_horse_age(dob):
+    today = utc.localize(datetime.today())
+    d = dob
+    diff = 0
+    while d <= today:
+        d += timedelta(days=monthrange(today.day,today.month)[1])
+        diff += 1
+    if diff < 15:
+        return diff
+    return 15
 
 def get_horse_pedigree(horse, gen_limit=6):
     maxgen = 0
