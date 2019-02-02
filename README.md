@@ -1,5 +1,6 @@
-# TODO:
+# Illuusion sim
 
-- horse page essentials + main page
-    - change all horse addresses to actual complete address instead of the slug
-- setup digitalocean
+This is a personal project for a Finnish horse role playing sim. Currently very much work in progress.
+
+Deployed at http://illuusion.net/v/hopeapaju/
+
